@@ -13,12 +13,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/inri13666/coen-uploader-bundle.git",
-                "reference": "1afd6e1f24f640b3f58e8067c05876b362a8d744"
+                "reference": "c8d9814ef3c6e0242c559001fd249b0fdae318f4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/inri13666/coen-uploader-bundle/zipball/1afd6e1f24f640b3f58e8067c05876b362a8d744",
-                "reference": "1afd6e1f24f640b3f58e8067c05876b362a8d744",
+                "url": "https://api.github.com/repos/inri13666/coen-uploader-bundle/zipball/c8d9814ef3c6e0242c559001fd249b0fdae318f4",
+                "reference": "c8d9814ef3c6e0242c559001fd249b0fdae318f4",
                 "shasum": ""
             },
             "require": {
@@ -46,7 +46,7 @@
                     "email": "mesaverde228@gmail.com"
                 }
             ],
-            "time": "2017-12-20 08:44:23"
+            "time": "2017-12-20 09:27:52"
         },
         {
             "name": "composer/ca-bundle",
