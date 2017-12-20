@@ -1,0 +1,186 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div id="wrapper">
+        <div id="container">
+            <div class="form">
+                {{ form_start(form) }}
+                {# store the prototype on the data-prototype attribute #}
+                <ul id="file-fields-list"
+                    data-prototype="{{ form_widget(form.files.vars.prototype)|e }}">
+                    {% for fileField in form.files %}
+                        <li>
+                            {{ form_errors(fileField) }}
+                            {{ form_widget(fileField) }}
+                        </li>
+                    {% endfor %}
+                </ul>
+
+                <a href="#" id="add-another-file">Add another file</a>
+                <input type="submit" value="Submit">
+                {{ form_end(form) }}
+            </div>
+            {% if files|length %}
+                <div class="table">
+                    <table border="solid 1px">
+                        <thead>
+                        <tr>
+                            <th>File Name</th>
+                            <th>Extension</th>
+                            <th>Mime Type</th>
+                        </tr>
+                        </thead>
+                        {% for file in files %}
+                            <tr>
+                                <td>{{ file.filename }}</td>
+                                <td>{{ file.extension }}</td>
+                                <td>{{ file.mimeType }}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        // keep track of how many file fields have been rendered
+        var fileCount = '{{ form.files|length }}';
+        var allowedCount = {{ allowedCount }};
+
+        jQuery(document).ready(function() {
+            jQuery('#add-another-file').click(function(e) {
+                e.preventDefault();
+
+                var fileList = jQuery('#file-fields-list');
+
+                // grab the prototype template
+                var newWidget = fileList.attr('data-prototype');
+                // replace the "__name__" used in the id and name of the prototype
+                // with a number that's unique to your files
+                // end name attribute looks like name="contact[files][2]"
+                newWidget = newWidget.replace(/__name__/g, fileCount);
+                fileCount++;
+
+                if(allowedCount === fileCount){
+                    $('#add-another-file').hide();
+                }
+
+                // create a new list element and add it to the list
+                var newLi = jQuery('<li></li>').html(newWidget);
+                newLi.appendTo(fileList);
+            });
+        })
+    </script>
+{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        body {
+            background: #F5F5F5;
+            font: 18px/1.5 sans-serif;
+        }
+
+        h1, h2 {
+            line-height: 1.2;
+            margin: 0 0 .5em;
+        }
+
+        h1 {
+            font-size: 36px;
+        }
+
+        h2 {
+            font-size: 21px;
+            margin-bottom: 1em;
+        }
+
+        p {
+            margin: 0 0 1em 0;
+        }
+
+        a {
+            color: #0000F0;
+        }
+
+        a:hover {
+            text-decoration: none;
+        }
+
+        code {
+            background: #F5F5F5;
+            max-width: 100px;
+            padding: 2px 6px;
+            word-wrap: break-word;
+        }
+
+        #wrapper {
+            background: #FFF;
+            margin: 1em auto;
+            max-width: 800px;
+            width: 95%;
+        }
+
+        #container {
+            padding: 2em;
+        }
+
+        #welcome, #status {
+            margin-bottom: 2em;
+        }
+
+        #welcome h1 span {
+            display: block;
+            font-size: 75%;
+        }
+
+        #icon-status, #icon-book {
+            float: left;
+            height: 64px;
+            margin-right: 1em;
+            margin-top: -4px;
+            width: 64px;
+        }
+
+        #icon-book {
+            display: none;
+        }
+
+        @media (min-width: 768px) {
+            #wrapper {
+                width: 80%;
+                margin: 2em auto;
+            }
+
+            #icon-book {
+                display: inline-block;
+            }
+
+            #status a, #next a {
+                display: block;
+            }
+
+            @-webkit-keyframes fade-in {
+                0% {
+                    opacity: 0;
+                }
+                100% {
+                    opacity: 1;
+                }
+            }
+            @keyframes fade-in {
+                0% {
+                    opacity: 0;
+                }
+                100% {
+                    opacity: 1;
+                }
+            }
+            .sf-toolbar {
+                opacity: 0;
+                -webkit-animation: fade-in 1s .2s forwards;
+                animation: fade-in 1s .2s forwards;
+            }
+        }
+    </style>
+{% endblock %}
